@@ -10745,7 +10745,7 @@ do
                 Icon = ak.Icon,
                 TextXAlignment = ak.TextXAlignment or "Left",
                 TextSize = ak.TextSize or 18,
-                Box = true,
+                Box = false,
                 FontWeight = ak.FontWeight or Enum.FontWeight.SemiBold,
                 TextTransparency = ak.TextTransparency or 0,
                 Opened = ak.Opened or false,
