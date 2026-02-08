@@ -5180,7 +5180,7 @@ do
                     ac(
                         "UIStroke",
                         {
-                            Thickness = 1,
+                            Thickness = 0,
                             ApplyStrokeMode = "Border",
                             Color = Color3.new(1, 1, 1),
                             Transparency = 0
@@ -5359,7 +5359,7 @@ do
 
                 am.UICorner.CornerRadius = aq.CornerRadius
                 am.TextButton.UICorner.CornerRadius = UDim.new(aq.CornerRadius.Scale, aq.CornerRadius.Offset - 4)
-                am.UIStroke.Thickness = aq.StrokeThickness
+                am.UIStroke.Thickness = 0
             end
 
             return ag
@@ -14765,7 +14765,6 @@ end
                             aw
                         }
                     ),
-                    UIStroke,
                     av,
                     ax,
                     ay,
@@ -15420,7 +15419,7 @@ end
                             Enum.EasingDirection.Out
                         ):Play()
                         if UIStroke then
-                            al(UIStroke, 0, {Transparency = .8}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play(
+                            al(UIStroke, 0, {Transparency = 1}, Enum.EasingStyle.Quint, Enum.EasingDirection.Out):Play(
 
                             )
                         end
