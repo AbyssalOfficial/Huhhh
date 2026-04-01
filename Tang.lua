@@ -1,3 +1,19 @@
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local UserInputService = game:GetService("UserInputService")
+
+local Library = {}
+
+-- [[ UTILS ]]
+local function Create(class, props)
+    local inst = Instance.new(class)
+    for i, v in pairs(props) do inst[i] = v end
+    return inst
+end
 function AddGradientStroke(parent)
     local stroke = Create("UIStroke", {
         Parent = parent,
@@ -14,6 +30,396 @@ function AddGradientStroke(parent)
     })
     return stroke
 end
+
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local UserInputService = game:GetService("UserInputService")
+
+local Library = {}
+
+-- [[ UTILS ]]
+local function Create(class, props)
+    local inst = Instance.new(class)
+    for i, v in pairs(props) do inst[i] = v end
+    return inst
+end
+if not isfolder("MaoHub") then makefolder("MaoHub") end
+if not isfolder("MaoHub/AudioPlayer") then makefolder("MaoHub/AudioPlayer") end
+local mp3Files = listfiles("MaoHub/AudioPlayer/")
+
+local Happy = Instance.new("ScreenGui", CoreGui)
+Happy.Name = "Mao"
+Happy.ResetOnSpawn = false
+Happy.Enabled = true
+Happy.DisplayOrder = 99999
+
+local Audio = Instance.new("Frame", Happy)
+Audio.Name = "MaoHub_V3"
+Audio.Size = UDim2.new(0, 330, 0, 360)
+Audio.Position = UDim2.new(0.5, -165, 0.5, -180)
+Audio.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Audio.BackgroundTransparency = 0.5
+Audio.BorderSizePixel = 0
+Audio.ClipsDescendants = true
+Audio.Active = true
+Audio.Visible = false
+Instance.new("UICorner", Audio).CornerRadius = UDim.new(0, 10)
+
+Create("UIGradient", {
+    Parent = Audio,
+    Color = ColorSequence.new(
+        Color3.fromRGB(200, 0, 0),
+        Color3.fromRGB(10, 10, 10),
+        Color3.fromRGB(12, 12, 12),
+        Color3.fromRGB(14, 14, 14),
+        Color3.fromRGB(0, 0, 0)
+    ),
+    Rotation = 260,
+    Transparency = NumberSequence.new(0.55)
+})
+
+local Topbar = Instance.new("Frame", Audio)
+Topbar.Size = UDim2.new(1, 0, 0, 40)
+Topbar.BackgroundTransparency = 1
+
+local Title = Instance.new("TextLabel", Topbar)
+Title.Text = "Mao Hub"
+Title.Size = UDim2.new(0.5, 0, 1, 0)
+Title.Position = UDim2.new(0, 15, 0, 0)
+Title.TextColor3 = Color3.fromRGB(235, 70, 70)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.BackgroundTransparency = 1
+
+local MinimizeBtn = Instance.new("TextButton", Topbar)
+MinimizeBtn.Text = "—"
+MinimizeBtn.Size = UDim2.new(0, 40, 1, 0)
+MinimizeBtn.Position = UDim2.new(1, -40, 0, 0)
+MinimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MinimizeBtn.BackgroundTransparency = 1
+
+local Card = Instance.new("Frame", Audio)
+Card.Name = "hah"
+Card.Size = UDim2.new(0, 290, 0, 100)
+Card.Position = UDim2.new(0.5, -145, 0, 45)
+Card.BackgroundTransparency = 0.6
+Card.BackgroundColor3 = Color3.fromRGB(20, 20, 23)
+Instance.new("UICorner", Card)
+
+local TrackTitle = Instance.new("TextLabel", Card)
+TrackTitle.Text = (#mp3Files > 0) and "Waiting..." or "No songs... :("
+TrackTitle.Size = UDim2.new(1, -20, 0, 35)
+TrackTitle.Position = UDim2.new(0, 10, 0, 5)
+TrackTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+TrackTitle.Font = Enum.Font.GothamBold
+TrackTitle.TextSize = 15
+TrackTitle.BackgroundTransparency = 1
+
+local BarBg = Instance.new("Frame", Card)
+BarBg.Size = UDim2.new(0, 250, 0, 6)
+BarBg.Position = UDim2.new(0.5, -125, 0, 55)
+BarBg.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+BarBg.BackgroundTransparency = 0.5
+Instance.new("UICorner", BarBg)
+
+local BarFill = Instance.new("Frame", BarBg)
+BarFill.Size = UDim2.new(0, 0, 1, 0)
+BarFill.BackgroundColor3 = Color3.fromRGB(235, 70, 70)
+Instance.new("UICorner", BarFill)
+
+local Thumb = Instance.new("Frame", BarFill)
+Thumb.Size = UDim2.new(0, 16, 0, 16)
+Thumb.Position = UDim2.new(1, -8, 0.5, -8)
+Thumb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", Thumb).CornerRadius = UDim.new(1, 0)
+
+local StartT = Instance.new("TextLabel", Card)
+StartT.Text = "0:00"
+StartT.Position = UDim2.new(0, 15, 0, 70)
+StartT.Size = UDim2.new(0, 40, 0, 20)
+StartT.TextColor3 = Color3.fromRGB(120, 120, 120)
+StartT.Font = Enum.Font.Gotham
+StartT.TextSize = 11
+StartT.BackgroundTransparency = 1
+
+local EndT = Instance.new("TextLabel", Card)
+EndT.Text = "0:00"
+EndT.Position = UDim2.new(1, -55, 0, 70)
+EndT.Size = UDim2.new(0, 40, 0, 20)
+EndT.TextColor3 = Color3.fromRGB(120, 120, 120)
+EndT.Font = Enum.Font.Gotham
+EndT.TextSize = 11
+EndT.BackgroundTransparency = 1
+
+local VolLabel = Instance.new("TextLabel", Audio)
+VolLabel.Text = "VOL"
+VolLabel.Size = UDim2.new(0, 30, 0, 20)
+VolLabel.Position = UDim2.new(0, 20, 0, 155)
+VolLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+VolLabel.Font = Enum.Font.GothamBold
+VolLabel.TextSize = 11
+VolLabel.BackgroundTransparency = 1
+
+local VolBg = Instance.new("Frame", Audio)
+VolBg.Size = UDim2.new(0, 200, 0, 4)
+VolBg.Position = UDim2.new(0, 60, 0, 163)
+VolBg.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+VolBg.BackgroundTransparency = 0.5
+Instance.new("UICorner", VolBg)
+
+local VolFill = Instance.new("Frame", VolBg)
+VolFill.Size = UDim2.new(0.5, 0, 1, 0)
+VolFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", VolFill)
+
+local VolPctLabel = Instance.new("TextLabel", Audio)
+VolPctLabel.Text = "50%"
+VolPctLabel.Size = UDim2.new(0, 40, 0, 20)
+VolPctLabel.Position = UDim2.new(0, 265, 0, 155)
+VolPctLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+VolPctLabel.Font = Enum.Font.GothamBold
+VolPctLabel.TextSize = 11
+VolPctLabel.BackgroundTransparency = 1
+
+local Controls = Instance.new("Frame", Audio)
+Controls.Size = UDim2.new(1, 0, 0, 50)
+Controls.Position = UDim2.new(0, 0, 0, 180)
+Controls.BackgroundTransparency = 1
+
+local Sound = Instance.new("Sound", game:GetService("SoundService"))
+Sound.Volume = 0.5
+
+local scrubbing = false
+local volDragging = false
+
+local PlayBtn = Instance.new("ImageButton", Controls)
+PlayBtn.Size = UDim2.new(0, 45, 0, 45)
+PlayBtn.Position = UDim2.new(0.5, -22, 0.5, -22)
+PlayBtn.Image = "rbxassetid://12099513379"
+PlayBtn.BackgroundTransparency = 1
+
+local ShuffleBtn = Instance.new("ImageButton", Controls)
+ShuffleBtn.Size = UDim2.new(0, 22, 0, 22)
+ShuffleBtn.Position = UDim2.new(0.08, 0, 0.5, -11)
+ShuffleBtn.Image = "rbxassetid://99327906487221"
+ShuffleBtn.BackgroundTransparency = 1
+
+local LoopBtn = Instance.new("ImageButton", Controls)
+LoopBtn.Size = UDim2.new(0, 22, 0, 22)
+LoopBtn.Position = UDim2.new(0.92, -22, 0.5, -11)
+LoopBtn.Image = "rbxassetid://127077202039990"
+LoopBtn.BackgroundTransparency = 1
+
+local RewindBtn = Instance.new("ImageButton", Controls)
+RewindBtn.Size = UDim2.new(0, 32, 0, 32)
+RewindBtn.Position = UDim2.new(0.24, 0, 0.5, -16)
+RewindBtn.Image = "rbxassetid://138415720834412"
+RewindBtn.BackgroundTransparency = 1
+
+local ForwardBtn = Instance.new("ImageButton", Controls)
+ForwardBtn.Size = UDim2.new(0, 32, 0, 32)
+ForwardBtn.Position = UDim2.new(0.66, 0, 0.5, -16)
+ForwardBtn.Image = "rbxassetid://121610549642254"
+ForwardBtn.BackgroundTransparency = 1
+
+-- Functions
+local function updateMusicSeek(input)
+    local barX = BarBg.AbsolutePosition.X
+    local barWidth = BarBg.AbsoluteSize.X
+    local pct = math.clamp((input.Position.X - barX) / barWidth, 0, 1)
+    BarFill.Size = UDim2.new(pct, 0, 1, 0)
+    if Sound.TimeLength > 0 then
+        Sound.TimePosition = pct * Sound.TimeLength
+        StartT.Text = string.format("%d:%02d", math.floor(Sound.TimePosition/60), math.floor(Sound.TimePosition%60))
+    end
+end
+
+local function updateVolume(input)
+    local volX = VolBg.AbsolutePosition.X
+    local volWidth = VolBg.AbsoluteSize.X
+    local pct = math.clamp((input.Position.X - volX) / volWidth, 0, 1)
+    VolFill.Size = UDim2.new(pct, 0, 1, 0)
+    Sound.Volume = pct * 2
+    VolPctLabel.Text = math.floor(pct * 100) .. "%"
+end
+
+BarBg.InputBegan:Connect(function(i)
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then
+        scrubbing = true
+        updateMusicSeek(i)
+    end
+end)
+
+VolBg.InputBegan:Connect(function(i)
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then
+        volDragging = true
+        updateVolume(i)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        if scrubbing then
+            updateMusicSeek(input)
+        elseif volDragging then
+            updateVolume(input)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        scrubbing = false
+        volDragging = false
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if Sound.TimeLength > 0 then
+        if not scrubbing then
+            local pct = Sound.TimePosition / Sound.TimeLength
+            BarFill.Size = UDim2.new(pct, 0, 1, 0)
+            StartT.Text = string.format("%d:%02d", math.floor(Sound.TimePosition/60), math.floor(Sound.TimePosition%60))
+        end
+        EndT.Text = string.format("%d:%02d", math.floor(Sound.TimeLength/60), math.floor(Sound.TimeLength%60))
+    end
+end)
+
+PlayBtn.MouseButton1Click:Connect(function()
+    if Sound.IsPlaying then 
+        Sound:Pause() 
+        PlayBtn.Image = "rbxassetid://12099513379"
+    else 
+        Sound:Resume() 
+        PlayBtn.Image = "rbxassetid://14219414360" 
+    end
+end)
+
+RewindBtn.MouseButton1Click:Connect(function() Sound.TimePosition -= 10 end)
+ForwardBtn.MouseButton1Click:Connect(function() Sound.TimePosition += 10 end)
+
+ShuffleBtn.MouseButton1Click:Connect(function()
+    if #mp3Files > 0 then
+        local file = mp3Files[math.random(1, #mp3Files)]
+        Sound.SoundId = getcustomasset(file)
+        TrackTitle.Text = file:match("([^/]+)$")
+        Sound:Play()
+        PlayBtn.Image = "rbxassetid://14219414360"
+    end
+end)
+
+LoopBtn.MouseButton1Click:Connect(function()
+    Sound.Looped = not Sound.Looped
+    LoopBtn.ImageColor3 = Sound.Looped and Color3.fromRGB(235, 70, 70) or Color3.fromRGB(255, 255, 255)
+end)
+
+local draggingUI, dragStart, startPos
+Audio.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 and not scrubbing and not volDragging then
+        draggingUI = true dragStart = input.Position startPos = Audio.Position
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if draggingUI and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        Audio.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(i) 
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then 
+        draggingUI = false 
+    end 
+end)
+
+local LibFrame = Instance.new("ScrollingFrame", Audio)
+LibFrame.Size = UDim2.new(1, -20, 0, 110)
+LibFrame.Position = UDim2.new(0, 10, 0, 240)
+LibFrame.BackgroundTransparency = 1
+LibFrame.ScrollBarThickness = 2
+LibFrame.CanvasSize = UDim2.new(0, 0, 0, #mp3Files * 35)
+
+local UIList = Instance.new("UIListLayout", LibFrame)
+UIList.Padding = UDim.new(0, 5)
+
+for _, file in pairs(mp3Files) do
+    local b = Instance.new("TextButton", LibFrame)
+    b.Size = UDim2.new(1, -5, 0, 30)
+    b.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+    b.BackgroundTransparency = 0.3
+    b.Text = "  " .. file:match("([^/]+)$")
+    b.TextColor3 = Color3.fromRGB(255, 255, 255)
+    b.TextSize = 13
+    b.Font = Enum.Font.GothamBold
+    b.TextXAlignment = Enum.TextXAlignment.Left
+    Instance.new("UICorner", b)
+    b.MouseButton1Click:Connect(function()
+        Sound.SoundId = getcustomasset(file)
+        TrackTitle.Text = file:match("([^/]+)$")
+        Sound:Play()
+        PlayBtn.Image = "rbxassetid://14219414360"
+    end)
+end
+
+MinimizeBtn.MouseButton1Click:Connect(function()
+    local isMinimized = (Audio.Size.Y.Offset > 50)
+    local target = isMinimized and UDim2.new(0, 330, 0, 40) or UDim2.new(0, 330, 0, 360)
+    TweenService:Create(Audio, TweenInfo.new(0.3), {Size = target}):Play()
+end)
+
+local function OpenAudio()
+    Audio.Visible = true
+    Audio.BackgroundTransparency = 1
+    Audio.Size = UDim2.new(0, 280, 0, 310)
+    local info = TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+    
+    TweenService:Create(Audio, info, {Size = UDim2.new(0, 330, 0, 360), BackgroundTransparency = 0}):Play()
+    
+    for _, v in pairs(Audio:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            TweenService:Create(v, info, {TextTransparency = 0}):Play()
+        elseif v:IsA("ImageButton") or v:IsA("ImageLabel") then
+            TweenService:Create(v, info, {ImageTransparency = 0}):Play()
+        elseif v:IsA("Frame") or v:IsA("ScrollingFrame") then
+            if v ~= Audio then
+                -- Determine if frame should be transparent or not
+                local originalTransparency = 0
+                if v == Topbar or v == Controls or v == LibFrame then originalTransparency = 1 end
+                TweenService:Create(v, info, {BackgroundTransparency = originalTransparency}):Play()
+            end
+        end
+    end
+    game:GetService("CoreGui"):WaitForChild("Mao"):WaitForChild("MaoHub_V3"):WaitForChild("hah").BackgroundTransparency = 0.6
+end
+
+local function CloseAudio()
+    local info = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+    for _, v in pairs(Audio:GetDescendants()) do
+        if v:IsA("TextLabel") or v:IsA("TextButton") then
+            TweenService:Create(v, info, {TextTransparency = 1}):Play()
+        elseif v:IsA("ImageButton") or v:IsA("ImageLabel") then
+            TweenService:Create(v, info, {ImageTransparency = 1}):Play()
+        elseif v:IsA("Frame") or v:IsA("ScrollingFrame") then
+            if v ~= Audio then
+                TweenService:Create(v, info, {BackgroundTransparency = 1}):Play()
+            end
+        end
+    end
+    local AudioTween = TweenService:Create(Audio, info, {Size = UDim2.new(0, 280, 0, 310), BackgroundTransparency = 1})
+    AudioTween:Play()
+    AudioTween.Completed:Connect(function() Audio.Visible = false end)
+end
+
+
+OpenAudio()
+wait(0.01)
+CloseAudio()
 
 function Library:CreateWindow(cfg)
 local ScreenGui = Create("ScreenGui", {
