@@ -1,35 +1,4 @@
-local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-local lp = Players.LocalPlayer
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local CoreGui = game:GetService("CoreGui")
-local UserInputService = game:GetService("UserInputService")
 
-local Library = {}
-
--- [[ UTILS ]]
-local function Create(class, props)
-    local inst = Instance.new(class)
-    for i, v in pairs(props) do inst[i] = v end
-    return inst
-end
-function AddGradientStroke(parent)
-    local stroke = Create("UIStroke", {
-        Parent = parent,
-        Color = Color3.fromRGB(255, 255, 255),
-        Thickness = 0.6,
-        Transparency = 0.6,
-        ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    })
-    Create("UIGradient", {
-        Parent = stroke,
-        Color = ColorSequence.new(Color3.fromRGB(200, 0, 0), Color3.fromRGB(0, 0, 0)),
-        Rotation = 90,
-        Transparency = NumberSequence.new(0.6)
-    })
-    return stroke
-end
 
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
